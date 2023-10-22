@@ -1,0 +1,62 @@
+[
+    {
+      "hospital_name": "Department of Health and Human Services",
+      "hospital_address": "123 Government Street, Capital City, USA",
+      "phone_number": "+1 (555) 123-4567",
+      "rating": 4.6
+    },
+    {
+      "hospital_name": "Environmental Protection Agency",
+      "hospital_address": "456 Eco Drive, Green City, USA",
+      "phone_number": "+1 (555) 987-6543",
+      "rating": 4.8
+    },
+    {
+      "hospital_name": "Department of Education",
+      "hospital_address": "789 Learning Lane, Eduville, USA",
+      "phone_number": "+1 (555) 876-5432",
+      "rating": 4.5
+    },
+    {
+      "hospital_name": "Federal Bureau of Investigation (FBI)",
+      "hospital_address": "101 Security Avenue, Secureville, USA",
+      "phone_number": "+1 (555) 234-5678",
+      "rating": 4.7
+    },
+    {
+      "hospital_name": "Department of Transportation",
+      "hospital_address": "321 Commute Drive, Transitown, USA",
+      "phone_number": "+1 (555) 765-4321",
+      "rating": 4.6
+    },
+    {
+      "hospital_name": "Social Security Administration",
+      "hospital_address": "555 Retirement Street, Secureville, USA",
+      "phone_number": "+1 (555) 345-6789",
+      "rating": 4.5
+    },
+    {
+      "hospital_name": "Department of Defense",
+      "hospital_address": "654 Defense Avenue, Defenderville, USA",
+      "phone_number": "+1 (555) 876-1234",
+      "rating": 4.9
+    },
+    {
+      "hospital_name": "National Aeronautics and Space Administration (NASA)",
+      "hospital_address": "888 Space Drive, Astronomia, USA",
+      "phone_number": "+1 (555) 567-8901",
+      "rating": 4.7
+    },
+    {
+      "hospital_name": "Department of Justice",
+      "hospital_address": "777 Justice Street, Justitia, USA",
+      "phone_number": "+1 (555) 234-5678",
+      "rating": 4.8
+    },
+    {
+      "hospital_name": "Department of Agriculture",
+      "hospital_address": "444 Agrarian Drive, Farmville, USA",
+      "phone_number": "+1 (555) 789-1234",
+      "rating": 4.5
+    }
+  ]

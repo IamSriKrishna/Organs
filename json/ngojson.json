@@ -1,0 +1,63 @@
+[
+    {
+      "hospital_name": "Global Aid Foundation",
+      "hospital_address": "123 Humanity Street, Charityville, USA",
+      "phone_number": "+1 (555) 123-4567",
+      "rating": 4.6
+    },
+    {
+      "hospital_name": "Green Earth Alliance",
+      "hospital_address": "456 Eco Avenue, Sustainville, USA",
+      "phone_number": "+1 (555) 987-6543",
+      "rating": 4.8
+    },
+    {
+      "hospital_name": "Health for All International",
+      "hospital_address": "789 Wellness Lane, Careburg, USA",
+      "phone_number": "+1 (555) 876-5432",
+      "rating": 4.5
+    },
+    {
+      "hospital_name": "Education Empowerment Foundation",
+      "hospital_address": "101 Learning Drive, Learnville, USA",
+      "phone_number": "+1 (555) 234-5678",
+      "rating": 4.7
+    },
+    {
+      "hospital_name": "Children's Rights Advocates",
+      "hospital_address": "321 Hope Way, Childville, USA",
+      "phone_number": "+1 (555) 765-4321",
+      "rating": 4.6
+    },
+    {
+      "hospital_name": "Women's Empowerment Network",
+      "hospital_address": "555 Equality Street, Empowerburg, USA",
+      "phone_number": "+1 (555) 345-6789",
+      "rating": 4.5
+    },
+    {
+      "hospital_name": "Animal Rescue Society",
+      "hospital_address": "654 Animal Avenue, Petville, USA",
+      "phone_number": "+1 (555) 876-1234",
+      "rating": 4.9
+    },
+    {
+      "hospital_name": "Hunger Relief Alliance",
+      "hospital_address": "888 Nourish Lane, Feedtown, USA",
+      "phone_number": "+1 (555) 567-8901",
+      "rating": 4.7
+    },
+    {
+      "hospital_name": "Peace and Harmony Foundation",
+      "hospital_address": "777 Unity Drive, Peacetown, USA",
+      "phone_number": "+1 (555) 234-5678",
+      "rating": 4.8
+    },
+    {
+      "hospital_name": "Art for All Initiative",
+      "hospital_address": "444 Creativity Street, Artsville, USA",
+      "phone_number": "+1 (555) 789-1234",
+      "rating": 4.5
+    }
+  ]
+  

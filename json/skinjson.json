@@ -1,0 +1,177 @@
+[
+    {
+      "hospital_name": "Dermacare Medical Center",
+      "hospital_address": "123 Oak Street, Anytown, USA",
+      "phone_number": "+1 (555) 123-4567",
+      "rating": 4.5
+    },
+    {
+      "hospital_name": "SkinSolutions Institute",
+      "hospital_address": "456 Elm Avenue, Another City, USA",
+      "phone_number": "+1 (555) 987-6543",
+      "rating": 4.8
+    },
+    {
+      "hospital_name": "Epiderma Hospital",
+      "hospital_address": "789 Cedar Lane, Someplace, USA",
+      "phone_number": "+1 (555) 876-5432",
+      "rating": 4.3
+    },
+    {
+      "hospital_name": "SkinHealth Clinic",
+      "hospital_address": "101 Pine Road, Lakeside Town, USA",
+      "phone_number": "+1 (555) 234-5678",
+      "rating": 4.7
+    },
+    {
+      "hospital_name": "ClearSkin Medical Center",
+      "hospital_address": "321 Willow Street, Sunset City, USA",
+      "phone_number": "+1 (555) 765-4321",
+      "rating": 4.2
+    },
+    {
+      "hospital_name": "Dermatology Center",
+      "hospital_address": "555 Fir Avenue, Golden Town, USA",
+      "phone_number": "+1 (555) 345-6789",
+      "rating": 4.6
+    },
+    {
+      "hospital_name": "SkinCare Institute",
+      "hospital_address": "654 Birch Lane, OptiView City, USA",
+      "phone_number": "+1 (555) 876-1234",
+      "rating": 4.9
+    },
+    {
+      "hospital_name": "ClearComplexion Medical Center",
+      "hospital_address": "888 Maple Road, ClearVision Town, USA",
+      "phone_number": "+1 (555) 567-8901",
+      "rating": 4.4
+    },
+    {
+      "hospital_name": "EpiDerm Hospital",
+      "hospital_address": "777 Redwood Lane, EagleEye City, USA",
+      "phone_number": "+1 (555) 234-5678",
+      "rating": 4.8
+    },
+    {
+      "hospital_name": "SkinClinique",
+      "hospital_address": "444 Cedar Street, Valley Town, USA",
+      "phone_number": "+1 (555) 789-1234",
+      "rating": 4.1
+    },
+    {
+      "hospital_name": "SkinCare Oasis",
+      "hospital_address": "222 Willow Lane, BrightSight City, USA",
+      "phone_number": "+1 (555) 345-6789",
+      "rating": 4.7
+    },
+    {
+      "hospital_name": "Dermatology Wellness Center",
+      "hospital_address": "999 Oak Road, Sunrise Town, USA",
+      "phone_number": "+1 (555) 987-6543",
+      "rating": 4.5
+    },
+    {
+      "hospital_name": "GlowSkin Medical Center",
+      "hospital_address": "111 Birch Avenue, StarVision City, USA",
+      "phone_number": "+1 (555) 876-5432",
+      "rating": 4.3
+    },
+    {
+      "hospital_name": "RadiantSkin Clinic",
+      "hospital_address": "333 Maple Street, Crystal Clear Town, USA",
+      "phone_number": "+1 (555) 234-5678",
+      "rating": 4.6
+    },
+    {
+      "hospital_name": "HarborSkin Institute",
+      "hospital_address": "777 Pine Lane, Harbor Town, USA",
+      "phone_number": "+1 (555) 765-4321",
+      "rating": 4.2
+    },
+    {
+      "hospital_name": "PureDerm Hospital",
+      "hospital_address": "555 Elm Avenue, Diamond City, USA",
+      "phone_number": "+1 (555) 987-6543",
+      "rating": 4.9
+    },
+    {
+      "hospital_name": "EpiSkin Care Center",
+      "hospital_address": "888 Redwood Road, Lakeview Town, USA",
+      "phone_number": "+1 (555) 567-8901",
+      "rating": 4.4
+    },
+    {
+      "hospital_name": "SkinSculpt Institute",
+      "hospital_address": "123 Cedar Street, Sunset City, USA",
+      "phone_number": "+1 (555) 234-5678",
+      "rating": 4.7
+    },
+    {
+      "hospital_name": "SmoothSkin Medical Center",
+      "hospital_address": "321 Fir Lane, ClearEyes City, USA",
+      "phone_number": "+1 (555) 876-1234",
+      "rating": 4.5
+    },
+    {
+      "hospital_name": "EpiGlow Institute",
+      "hospital_address": "444 Birch Road, EagleVision Town, USA",
+      "phone_number": "+1 (555) 789-1234",
+      "rating": 4.8
+    },
+    {
+      "hospital_name": "SkinRevive Clinic",
+      "hospital_address": "555 Pine Avenue, Optical Oasis City, USA",
+      "phone_number": "+1 (555) 345-6789",
+      "rating": 4.1
+    },
+    {
+      "hospital_name": "DermaVita Eye Clinic",
+      "hospital_address": "654 Oak Street, Viewpoint Town, USA",
+      "phone_number": "+1 (555) 234-5678",
+      "rating": 4.6
+    },
+    {
+      "hospital_name": "Flawless Skin Hospital",
+      "hospital_address": "333 Elm Road, ClearSight City, USA",
+      "phone_number": "+1 (555) 765-4321",
+      "rating": 4.3
+    },
+    {
+      "hospital_name": "GoldenGlow Skin Center",
+      "hospital_address": "111 Willow Avenue, Golden Town, USA",
+      "phone_number": "+1 (555) 876-5432",
+      "rating": 4.7
+    },
+    {
+      "hospital_name": "SkinElegance Institute",
+      "hospital_address": "999 Cedar Road, OptiView City, USA",
+      "phone_number": "+1 (555) 987-6543",
+      "rating": 4.4
+    },
+    {
+      "hospital_name": "ClearVisage Clinic",
+      "hospital_address": "777 Redwood Street, Crystal Clear Town, USA",
+      "phone_number": "+1 (555) 567-8901",
+      "rating": 4.9
+    },
+    {
+      "hospital_name": "Dermatology Harmony Hospital",
+      "hospital_address": "123 Maple Lane, Lakeview Town, USA",
+      "phone_number": "+1 (555) 234-5678",
+      "rating": 4.5
+    },
+    {
+      "hospital_name": "SkinGlow Wellness Institute",
+      "hospital_address": "456 Cedar Avenue, Sunrise City, USA",
+      "phone_number": "+1 (555) 876-1234",
+      "rating": 4.8
+    },
+    {
+      "hospital_name": "DermaSculpt Oasis",
+      "hospital_address": "888 Fir Street, Valley Town, USA",
+      "phone_number": "+1 (555) 345-6789",
+      "rating": 4.1
+    }
+  ]
+  

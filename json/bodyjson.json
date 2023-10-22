@@ -1,0 +1,62 @@
+[
+    {
+      "hospital_name": "Medical Research Foundation",
+      "hospital_address": "123 Science Avenue, Research City, USA",
+      "phone_number": "+1 (555) 123-4567",
+      "rating": 4.5
+    },
+    {
+      "hospital_name": "Anatomy Education Center",
+      "hospital_address": "456 Cadaver Road, Studyville, USA",
+      "phone_number": "+1 (555) 987-6543",
+      "rating": 4.8
+    },
+    {
+      "hospital_name": "BioScience Institute",
+      "hospital_address": "789 Human Body Lane, Bioland, USA",
+      "phone_number": "+1 (555) 876-5432",
+      "rating": 4.3
+    },
+    {
+      "hospital_name": "Medical School of Anatomy",
+      "hospital_address": "101 Donor Street, Medtown, USA",
+      "phone_number": "+1 (555) 234-5678",
+      "rating": 4.7
+    },
+    {
+      "hospital_name": "Cadaver Learning Center",
+      "hospital_address": "321 Anatomical Road, Studyville, USA",
+      "phone_number": "+1 (555) 765-4321",
+      "rating": 4.2
+    },
+    {
+      "hospital_name": "Human Body Research Institute",
+      "hospital_address": "555 Dissection Lane, Bioland, USA",
+      "phone_number": "+1 (555) 345-6789",
+      "rating": 4.6
+    },
+    {
+      "hospital_name": "Anatomy and Physiology Lab",
+      "hospital_address": "654 Research Avenue, Medtown, USA",
+      "phone_number": "+1 (555) 876-1234",
+      "rating": 4.9
+    },
+    {
+      "hospital_name": "Donor Education Center",
+      "hospital_address": "888 Body Donation Road, Studyville, USA",
+      "phone_number": "+1 (555) 567-8901",
+      "rating": 4.4
+    },
+    {
+      "hospital_name": "Cadaveric Science Foundation",
+      "hospital_address": "777 Research Lane, Bioland, USA",
+      "phone_number": "+1 (555) 234-5678",
+      "rating": 4.8
+    },
+    {
+      "hospital_name": "Anatomical Research School",
+      "hospital_address": "444 Anatomy Street, Medtown, USA",
+      "phone_number": "+1 (555) 789-1234",
+      "rating": 4.1
+    }
+  ]
