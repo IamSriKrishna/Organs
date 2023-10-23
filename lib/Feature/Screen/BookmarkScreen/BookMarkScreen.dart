@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mohan/Sql/sql_helper.dart';
+import 'package:mohan/Util/localNotification.dart';
 import 'package:mohan/Util/util.dart';
 
 class BookmarkPage extends StatefulWidget {
@@ -21,13 +22,11 @@ class _BookmarkPageState extends State<BookmarkPage> {
   return formattedDate;
 }
   List<Map<String,dynamic>> _article= [];
-  bool _isLoading = false;
 
   void _refreshArticle()async{
     final data = await SQLHelper.getItems();
     setState(() {
       _article = data;
-      _isLoading = true;
     });
     print('Number Of Items ${_article.length}'); 
   }
@@ -36,9 +35,9 @@ void _DeleteItem(String title, int index) async {
   if (index >= 0 && index < _article.length) {
     await SQLHelper.delete(title);
 
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('Successfully deleted\n$title'),
-    ));
+    LocalNotifications.showScheduleNotification(
+        title: "Successfully deleted",
+        body: "$title",);
 
     setState(() {
       // Create a copy of the _article list

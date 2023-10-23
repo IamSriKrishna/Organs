@@ -6,14 +6,30 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mohan/Model/article.dart';
+import 'package:mohan/Sql/sql_helper.dart';
+import 'package:mohan/Util/localNotification.dart';
 import 'package:mohan/Util/util.dart';
 
-class Course extends StatelessWidget {
+class Course extends StatefulWidget {
   const Course({Key? key});
 
+  @override
+  State<Course> createState() => _CourseState();
+}
+
+class _CourseState extends State<Course> {
+  
+  String convertStringToDateFormat(String inputString) {
+  DateTime inputDate = DateTime.parse(inputString);
+  DateFormat outputFormat = DateFormat('dd-MM-yyyy');
+  String formattedDate = outputFormat.format(inputDate);
+
+  return formattedDate;
+}
+
+
   Future<List<Article>?> fetchNews() async {
-    // final apiKey = 'f8da4dc7f0ac4238bc9f784d18afae7e';
-    final url = 'https://newsapi.org/v2/everything?q=death&from=2023-09-30&sortBy=publishedAt&apiKey=f8da4dc7f0ac4238bc9f784d18afae7e';
+    final url = 'https://newsapi.org/v2/everything?q=india&sortBy=publishedAt&apiKey=54a0e3c6ed2246818154d2be69242bdd';
 
     final response = await http.get(
       Uri.parse(url),
@@ -22,36 +38,67 @@ class Course extends StatelessWidget {
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
       final List<dynamic> articles = data['articles'];
+      
+      //print(articles);
       return articles.map((dynamic article) => Article.fromJson(article)).toList();
     } else {
       throw Exception('Failed to load news');
     }
   }
-  Future onRefresh()async{
-    fetchNews();
-  }
-  String convertStringToDateFormat(String inputString) {
-  DateTime inputDate = DateTime.parse(inputString);
-  DateFormat outputFormat = DateFormat('dd-MM-yyyy');
-  String formattedDate = outputFormat.format(inputDate);
 
-  return formattedDate;
+Future<void> _removeItem(String title) async {
+  final isArticleInFavorites = _article.any((item) => item['title'] == title);
+
+  if (isArticleInFavorites) {
+    await SQLHelper.delete(title); // Implement the logic to delete the item
+    _refreshArticle();
+  }
 }
+  List<Map<String,dynamic>> _article= [];
+  bool _isLoading = false;
+
+  void _refreshArticle()async{
+    final data = await SQLHelper.getItems();
+    setState(() {
+      _article = data;
+      _isLoading = true;
+    });
+  }
+
+Future<void> _addItem(String title, String description, String publishedAt, String imageUrl) async {
+final isArticleAlreadyAdded = _article.any((item) => item['title'] == title);
+
+  if (!isArticleAlreadyAdded) {
+    await SQLHelper.CreateItem(
+      title, 
+      description, 
+      publishedAt, 
+      imageUrl
+    );
+    
+    _refreshArticle();
+  } else {
+    // Article is already in favorites, you can show a message or take some action
+    // For example, you can show a snackbar with a message:
+    final snackBar = SnackBar(
+      content: Text('Article is already in favorites'),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+}
+
+  @override
+  void initState() {
+    super.initState();
+    _refreshArticle();
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: fetchNews(),
       builder: (BuildContext context,AsyncSnapshot<List<Article>?> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: Center(
-              child: Lottie.asset(
-                'asset/lottie/docload.json',
-                height: MediaQuery.of(context).size.height * 0.2,
-                width: MediaQuery.of(context).size.width * 0.4,
-              )),
-          );
-        } else if (snapshot.hasError) {
+        if (snapshot.hasError) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -60,7 +107,6 @@ class Course extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.2,
                   width: MediaQuery.of(context).size.width * 0.4,
                 ),
-                Text('No Internet Connection')
             ],
           );
         } else if (snapshot.hasData) {
@@ -69,7 +115,8 @@ class Course extends StatelessWidget {
             physics: BouncingScrollPhysics(),
             itemCount: items.length,
             itemBuilder: (context, index) {
-              String formattedDate = convertStringToDateFormat(items[index].publishedAt!);
+              bool isFavorite = _article.any((item) => item['title'] == items[index].title);
+              String formattedDate = convertStringToDateFormat(items[index].publishedAt);
               return SizedBox(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height * 0.19,
@@ -108,32 +155,62 @@ class Course extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          child: Stack(
                             children: [
-                              Text(
-                                '${items[index].title}',
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w600,
-                                  color: themeColor.green
-                                ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${items[index].title}',
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    style: GoogleFonts.inter(
+                                      fontWeight: FontWeight.w600,
+                                      color: themeColor.green
+                                    ),
+                                  ),
+                                  Text(
+                                    '${items[index].description}',
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    style: GoogleFonts.inter(
+                                      color: themeColor.black.withOpacity(0.5)
+                                    ),
+                                  ),
+                                  Text(
+                                    '${formattedDate}',
+                                    style: GoogleFonts.inter(
+                                      color: themeColor.green
+                                    )
+                                  ),
+                                ],
                               ),
-                              Text(
-                                '${items[index].description}',
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                                style: GoogleFonts.inter(
-                                  color: themeColor.black.withOpacity(0.5)
+                              
+                              Align(
+                                alignment: Alignment(1.2,-1.5),
+                                child: IconButton(
+                                  onPressed: () async{
+                                    if (!isFavorite) {
+                                      await _addItem(
+                                        items[index].title,
+                                        items[index].description,
+                                        items[index].publishedAt,
+                                        items[index].url,
+                                      );
+                                      LocalNotifications.showSimpleNotification(
+                                          title: "Added to Favourite",
+                                          body: "${items[index].title}",);
+                                    } else {
+                                      await _removeItem(items[index].title);
+                                    }
+                                  },
+                                  icon: Icon(isFavorite
+                                    ? Icons.favorite
+                                    : Icons.favorite_border_outlined,
+                                    color: isFavorite ? Colors.red : null,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                '${formattedDate}',
-                                style: GoogleFonts.inter(
-                                  color: themeColor.green
-                                )
                               ),
                             ],
                           ),
@@ -147,7 +224,11 @@ class Course extends StatelessWidget {
           );
         } else {
           return Center(
-            child: Text('No data available.'),
+            child: Lottie.asset(
+                  'asset/lottie/docload.json',
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  width: MediaQuery.of(context).size.width * 0.4,
+                ),
           );
         }
       },

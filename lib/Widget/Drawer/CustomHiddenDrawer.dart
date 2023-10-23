@@ -1,11 +1,17 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mohan/Feature/Screen/Auth/Login.dart';
 import 'package:mohan/Feature/Screen/BookmarkScreen/BookMarkScreen.dart';
 import 'package:mohan/Feature/Screen/Overscreen/More/MoreOption.dart';
 import 'package:mohan/Feature/Screen/Overscreen/Notification/Notifications.dart';
 import 'package:mohan/Feature/Screen/Overscreen/OverScreen.dart';
+import 'package:mohan/Util/localNotification.dart';
 import 'package:mohan/Util/util.dart';
 import 'package:badges/badges.dart' as badge;
 import 'package:url_launcher/url_launcher.dart';
@@ -18,6 +24,28 @@ class HiddenDrawer extends StatefulWidget {
 }
 
 class _HiddenDrawerState extends State<HiddenDrawer> {
+    late StreamSubscription subscription;
+  bool isDeviceConnected = false;
+  bool isAlertSet = false;
+
+
+  getConnectivity() =>
+      subscription = Connectivity().onConnectivityChanged.listen(
+        (ConnectivityResult result) async {
+          isDeviceConnected = await InternetConnectionChecker().hasConnection;
+          if (!isDeviceConnected && isAlertSet == false) {
+            showDialogBox();
+            setState(() => isAlertSet = true);
+          }
+        },
+      );
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
+
   List<ScreenHiddenDrawer> _pages = [];
 
   Future<void> _website(String url) async {
@@ -28,7 +56,11 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
   }
   @override
   void initState() {
-    
+    LocalNotifications.showSimpleNotification(
+      title: "MohanFoundation",
+      body: "Welcome Back:)",
+      );
+    getConnectivity();
     _pages = [
       ScreenHiddenDrawer(
         ItemHiddenMenu(
@@ -126,4 +158,26 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
     );
     
   }
+  showDialogBox() => showCupertinoDialog<String>(
+        context: context,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: const Text('No Connection'),
+          content: const Text('Please check your internet connectivity'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context, 'Cancel');
+                setState(() => isAlertSet = false);
+                isDeviceConnected =
+                    await InternetConnectionChecker().hasConnection;
+                if (!isDeviceConnected && isAlertSet == false) {
+                  showDialogBox();
+                  setState(() => isAlertSet = true);
+                }
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
 }

@@ -1,8 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter/gestures.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mohan/Util/util.dart';
 import 'package:mohan/Widget/Drawer/CustomHiddenDrawer.dart';
@@ -16,6 +20,33 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late StreamSubscription subscription;
+  bool isDeviceConnected = false;
+  bool isAlertSet = false;
+
+  @override
+  void initState() {
+    getConnectivity();
+    super.initState();
+  }
+
+  getConnectivity() =>
+      subscription = Connectivity().onConnectivityChanged.listen(
+        (ConnectivityResult result) async {
+          isDeviceConnected = await InternetConnectionChecker().hasConnection;
+          if (!isDeviceConnected && isAlertSet == false) {
+            //showDialogBox();
+            setState(() => isAlertSet = true);
+          }
+        },
+      );
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
+
   final TextEditingController username = TextEditingController();
   final TextEditingController password = TextEditingController();
   bool proceed = false;
@@ -114,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(10)
                     )
                   ),
-                  onPressed: (){
+                  onPressed: ()async{
                     if(username.text.isEmpty||password.text.isEmpty){
                       if(username.text.isEmpty&&password.text.isEmpty){
                         
@@ -138,7 +169,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         proceed = true;
                         text = '';
                       });
-                      Future.delayed(Duration(seconds: 5)).then((value) => Navigator.pushNamedAndRemoveUntil(context, HiddenDrawer.route, (route) => false));}
+                      Future.delayed(Duration(seconds: 5)).then((value) => Navigator.pushNamedAndRemoveUntil(context, HiddenDrawer.route, (route) => false))
+                      ;}
                   }, 
                   child: Text('Login')
                 ),
@@ -164,4 +196,26 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+  // showDialogBox() => showCupertinoDialog<String>(
+  //       context: context,
+  //       builder: (BuildContext context) => CupertinoAlertDialog(
+  //         title: const Text('No Connection'),
+  //         content: const Text('Please check your internet connectivity'),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             onPressed: () async {
+  //               Navigator.pop(context, 'Cancel');
+  //               setState(() => isAlertSet = false);
+  //               isDeviceConnected =
+  //                   await InternetConnectionChecker().hasConnection;
+  //               if (!isDeviceConnected && isAlertSet == false) {
+  //                 showDialogBox();
+  //                 setState(() => isAlertSet = true);
+  //               }
+  //             },
+  //             child: const Text('OK'),
+  //           ),
+  //         ],
+  //       ),
+  //     );
 }

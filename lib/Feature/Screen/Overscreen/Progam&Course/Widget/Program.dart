@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mohan/Model/article.dart';
 import 'package:mohan/Sql/sql_helper.dart';
+import 'package:mohan/Util/localNotification.dart';
 import 'package:mohan/Util/util.dart';
 
 class Program extends StatefulWidget {
@@ -26,8 +27,9 @@ class _ProgramState extends State<Program> {
   return formattedDate;
 }
 
+
   Future<List<Article>?> fetchNews() async {
-    final url = 'https://newsapi.org/v2/everything?q=tesla&from=2023-09-22&sortBy=publishedAt&apiKey=54a0e3c6ed2246818154d2be69242bdd';
+    final url = 'https://newsapi.org/v2/everything?q=tesla&sortBy=publishedAt&apiKey=54a0e3c6ed2246818154d2be69242bdd';
 
     final response = await http.get(
       Uri.parse(url),
@@ -64,8 +66,7 @@ Future<void> _removeItem(String title) async {
   }
 
 Future<void> _addItem(String title, String description, String publishedAt, String imageUrl) async {
-  // Check if the article is already in the favorites list
-  final isArticleAlreadyAdded = _article.any((item) => item['title'] == title);
+final isArticleAlreadyAdded = _article.any((item) => item['title'] == title);
 
   if (!isArticleAlreadyAdded) {
     await SQLHelper.CreateItem(
@@ -74,6 +75,7 @@ Future<void> _addItem(String title, String description, String publishedAt, Stri
       publishedAt, 
       imageUrl
     );
+    
     _refreshArticle();
   } else {
     // Article is already in favorites, you can show a message or take some action
@@ -105,7 +107,6 @@ Future<void> _addItem(String title, String description, String publishedAt, Stri
                   height: MediaQuery.of(context).size.height * 0.2,
                   width: MediaQuery.of(context).size.width * 0.4,
                 ),
-                Text('${snapshot.error}')
             ],
           );
         } else if (snapshot.hasData) {
@@ -197,6 +198,9 @@ Future<void> _addItem(String title, String description, String publishedAt, Stri
                                         items[index].publishedAt,
                                         items[index].url,
                                       );
+                                      LocalNotifications.showSimpleNotification(
+                                          title: "Added to Favourite",
+                                          body: "${items[index].title}",);
                                     } else {
                                       await _removeItem(items[index].title);
                                     }
