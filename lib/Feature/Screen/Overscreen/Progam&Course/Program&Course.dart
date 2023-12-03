@@ -15,7 +15,7 @@ class ProgramandCourse extends StatelessWidget {
         body: Column(
           children: [
             TabBar(
-              indicatorColor: themeColor.green,
+              indicatorColor: themeColor.blue,
               indicatorWeight: 2.5,
               tabs: [
                 Tab(

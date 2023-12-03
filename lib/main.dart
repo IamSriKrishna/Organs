@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mohan/Feature/Screen/Auth/Login.dart';
 import 'package:mohan/Util/localNotification.dart';
+import 'package:mohan/Widget/Drawer/CustomHiddenDrawer.dart';
 import 'package:mohan/route.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +22,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context){
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: HiddenDrawer(),
       onGenerateRoute: (settings) => onGenerator(settings),
     );
   }

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mohan/Util/util.dart';
 
 class Categories {
   final String title;
@@ -64,19 +65,31 @@ List<Categories> category = const[
     background: Color.fromRGBO(188, 161, 242, 1),
     json: 'json/gojson.json'
   ),
+  Categories(
+    title: 'Laws On\nTransplantation', 
+    color: Color.fromRGBO(125, 74, 228, 1), 
+    icon: 'asset/category/balance.png',
+    background: Color.fromRGBO(188, 161, 242, 1),
+    json: 'json/gojson.json'
+  ),
+  Categories(
+    title: 'Pledge Your\nOrgans', 
+    color: Color.fromRGBO(125, 74, 228, 1), 
+    icon: 'asset/category/pledge.png',
+    background: Color.fromRGBO(188, 161, 242, 1),
+    json: 'json/gojson.json'
+  ),
 ];
 
 class CategoriesCard extends StatelessWidget {
-  final Color color;
-  final Color background;
   final String icon;
   final String title;
+  final Color? color;
   const CategoriesCard({
     super.key,
-    required this.color,
-    required this.background,
     required this.icon,
-    required this.title
+    required this.title,
+    this.color
   });
 
   @override
@@ -84,31 +97,35 @@ class CategoriesCard extends StatelessWidget {
     return Card(
       elevation: 5,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10)
+        borderRadius: BorderRadius.circular(20)
       ),
-      color: background,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      color: themeColor.appblue,
+      child: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          Align(
+            alignment: Alignment(0, -0.8),
             child: Container(
-              height: 65,
-              width: 65,
+              height: MediaQuery.of(context).size.height * 0.15,
+              width: MediaQuery.of(context).size.width * 0.25,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: color
+                color: Colors.white.withOpacity(0.1)
               ),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(icon,fit: BoxFit.fill,),
+                padding: const EdgeInsets.all(20.0),
+                child: Image.asset(icon,fit: BoxFit.fill,color: color,),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top:30.0),
+          Align(
+            alignment: Alignment(0, 1),
             child: Container(
+              height: MediaQuery.of(context).size.height * 0.065,
               alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: themeColor.appblue,
+                borderRadius: BorderRadius.circular(20)
+              ),
               child: Text(
                 title,
                 textAlign: TextAlign.center,

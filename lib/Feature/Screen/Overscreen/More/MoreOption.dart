@@ -88,17 +88,17 @@ class MoreOption extends StatelessWidget {
                 },
               ),
               CustomExpandWidget(
-                title: 'Rate Us',
-                icon: image.rateUS,
-                onTap: () {
-                  _launchUrl('play.google.com');
-                },
-              ),
-              CustomExpandWidget(
                 title: 'Share',
                 icon: image.share,
                 onTap: () {
                   shareApp();
+                },
+              ),
+              CustomExpandWidget(
+                title: 'Rate Us',
+                icon: image.rateUS,
+                onTap: () {
+                  _launchUrl('play.google.com');
                 },
               ),
               CustomExpandWidget(

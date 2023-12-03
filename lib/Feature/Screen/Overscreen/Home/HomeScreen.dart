@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mohan/Feature/Screen/ModelScreen/ModelScreen.dart';
 import 'package:mohan/Feature/Screen/Overscreen/Home/Widget/Card.dart';
 import 'package:mohan/Model/Categories.dart';
-import 'package:mohan/Util/util.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -11,58 +10,56 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        physics: const BouncingScrollPhysics(),
-        children: [
-          const CustomCard(),
-          Padding(
-            padding: const EdgeInsets.only(left:10.0),
-            child: Text(
-              'Categories',
-              style: GoogleFonts.inter(
-                fontSize: 18,
-                color: themeColor.green,
-                fontWeight: FontWeight.w500
-              ),
-            ),
+      body: CustomScrollView(
+        physics: BouncingScrollPhysics(),
+        slivers: [
+          SliverToBoxAdapter(
+            child: CustomCard(),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.76,
+          SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal:10.0),
-              child: GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.95,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 5
-                ), 
-                itemCount: category.length,
-                itemBuilder:(context, index) => InkWell(
-                  onTap: () {
-                      Navigator.of(context).pushNamed(
-                        ModelScreen.route,
-                        arguments: {
-                          'color':category[index].color,
-                          'back':category[index].background,
-                          'title':category[index].title,
-                          'json':category[index].json,
-                        }
-                      );
-                  },
-                  child: CategoriesCard(
-                    color: category[index].color,
-                    background: category[index].background,
-                    icon: category[index].icon,
-                    title: category[index].title,
-                  ),
+              padding: const EdgeInsets.only(left:10.0),
+              child: Text(
+                'Categories',
+                style: GoogleFonts.inter(
+                  fontSize: 18,
+                  color: Color.fromRGBO(6, 43, 119, 1).withOpacity(0.7),
+                  fontWeight: FontWeight.w500
                 ),
               ),
             ),
+          ),
+          SliverGrid.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.95,
+            ), 
+            itemCount: category.length,
+            itemBuilder:(context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                    onTap: () {
+                        Navigator.of(context).pushNamed(
+                          ModelScreen.route,
+                          arguments: {
+                            'color':Color.fromRGBO(6, 43, 119, 1).withOpacity(0.7),
+                            'back':Color.fromRGBO(236, 22, 31, 1).withOpacity(0.75),
+                            'title':category[index].title,
+                            'json':category[index].json,
+                          }
+                        );
+                    },
+                    child: CategoriesCard(
+                      icon: category[index].icon,
+                      title: category[index].title,
+                    ),
+                  ),
+              );
+            },
           )
         ],
-      ),
+      )
     );
   }
 }

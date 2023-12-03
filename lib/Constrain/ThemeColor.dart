@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ThemeColor{
+  final Color appblue = const Color.fromRGBO(0, 72, 206, 1);
   final Color darkBlue = const Color.fromRGBO(6, 93, 143, 1);
   final Color blue = const Color.fromARGB(255, 76, 132, 216);
   final Color lightblue = const Color.fromARGB(255, 76, 195, 216);

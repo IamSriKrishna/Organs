@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:mohan/Util/Screens.dart';
 import 'package:mohan/Util/util.dart';
 import 'package:mohan/Widget/Drawer/CustomDrawer.dart';
-import 'package:mohan/Widget/appbar/customAppbar.dart';
 class OverScreen extends StatefulWidget {
   const OverScreen({super.key});
 
@@ -31,18 +30,18 @@ class _OverScreenState extends State<OverScreen> {
         Image.asset(
           'asset/curve/home.png',
           height: MediaQuery.of(context).size.height * 0.0325,
-          color: themeColor.green,
+          color: Color.fromRGBO(6, 43, 119, 1).withOpacity(0.7),
         ),
         Image.asset(
           'asset/curve/program.png',
           height: MediaQuery.of(context).size.height * 0.0325,
-          color: themeColor.green,
+          color: Color.fromRGBO(6, 43, 119, 1).withOpacity(0.7),
         ),
-        Image.asset(
-          'asset/curve/calendar.png',
-          height: MediaQuery.of(context).size.height * 0.0325,
-          color: themeColor.green,
-        )
+        // Image.asset(
+        //   'asset/curve/calendar.png',
+        //   height: MediaQuery.of(context).size.height * 0.0325,
+        //   color: Color.fromRGBO(6, 43, 119, 1).withOpacity(0.7),
+        // )
         ],
         onTap: (value) {
           setState(() {

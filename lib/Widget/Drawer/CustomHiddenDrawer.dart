@@ -6,14 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:mohan/Feature/Screen/Auth/Login.dart';
-import 'package:mohan/Feature/Screen/BookmarkScreen/BookMarkScreen.dart';
 import 'package:mohan/Feature/Screen/Overscreen/More/MoreOption.dart';
-import 'package:mohan/Feature/Screen/Overscreen/Notification/Notifications.dart';
 import 'package:mohan/Feature/Screen/Overscreen/OverScreen.dart';
 import 'package:mohan/Util/localNotification.dart';
 import 'package:mohan/Util/util.dart';
-import 'package:badges/badges.dart' as badge;
 import 'package:url_launcher/url_launcher.dart';
 class HiddenDrawer extends StatefulWidget {
   static const route = 'HiddenDrawer';
@@ -24,7 +20,7 @@ class HiddenDrawer extends StatefulWidget {
 }
 
 class _HiddenDrawerState extends State<HiddenDrawer> {
-    late StreamSubscription subscription;
+  late StreamSubscription subscription;
   bool isDeviceConnected = false;
   bool isAlertSet = false;
 
@@ -42,6 +38,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
 
   @override
   void dispose() {
+
     subscription.cancel();
     super.dispose();
   }
@@ -57,7 +54,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
   @override
   void initState() {
     LocalNotifications.showSimpleNotification(
-      title: "MohanFoundation",
+      title: "MOHAN Foundation",
       body: "Welcome Back:)",
       );
     getConnectivity();
@@ -65,21 +62,21 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
       ScreenHiddenDrawer(
         ItemHiddenMenu(
           colorLineSelected: themeColor.lightblue,
-          name: 'Mohan Foundation', 
+          name: 'MOHAN Foundation', 
           baseStyle: const TextStyle(), 
           selectedStyle: const TextStyle(),
         ), 
         const OverScreen()
       ),
-      ScreenHiddenDrawer(
-        ItemHiddenMenu(
-          colorLineSelected: Colors.red,
-          name: 'BookMark', 
-          baseStyle: const TextStyle(), 
-          selectedStyle: const TextStyle(),
-        ), 
-        BookmarkPage()
-      ),
+      // ScreenHiddenDrawer(
+      //   ItemHiddenMenu(
+      //     colorLineSelected: Colors.red,
+      //     name: 'BookMark', 
+      //     baseStyle: const TextStyle(), 
+      //     selectedStyle: const TextStyle(),
+      //   ), 
+      //   BookmarkPage()
+      // ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(
           colorLineSelected: themeColor.green,
@@ -88,31 +85,6 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
           selectedStyle: const TextStyle(),
         ), 
         const MoreOption()
-      ),
-      // ScreenHiddenDrawer(
-      //   ItemHiddenMenu(
-      //     colorLineSelected: themeColor.black,
-      //     name: 'Profile', 
-      //     baseStyle: const TextStyle(), 
-      //     selectedStyle: const TextStyle(),
-      //   ), 
-      //   const Scaffold()
-      // ),
-      ScreenHiddenDrawer(
-        ItemHiddenMenu(
-          onTap: (){
-            Navigator.pushNamedAndRemoveUntil(
-              context, 
-              LoginScreen.route,
-              ((route) => false)
-            );
-          },
-          colorLineSelected: themeColor.card,
-          name: 'Sign Out', 
-          baseStyle: const TextStyle(), 
-          selectedStyle: const TextStyle(),
-        ), 
-        const Scaffold()
       ),
     ];
     super.initState();
@@ -141,17 +113,9 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
           ),
         elevationAppBar: 0,
         actionsAppBar: [
-          InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, Notifications.route);
-                },
-            child: Padding(
-              padding: const EdgeInsets.only(top:15.0,right: 8),
-              child: badge.Badge(
-                position: badge.BadgePosition.custom(start: 1.5),
-                child: Icon(Icons.notifications_outlined,color: themeColor.black,),
-              ),
-            ),
+          Padding(
+            padding: const EdgeInsets.all(15.0,),
+            child: Image.asset('asset/logo.png'),
           )
         ],
         backgroundColorContent: themeColor.appBarThemeColor,

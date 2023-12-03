@@ -56,7 +56,7 @@ class _ModelScreenState extends State<ModelScreen> {
       appBar: AppBar(
         elevation: 0,
         scrolledUnderElevation: 15,
-        backgroundColor: color,
+        backgroundColor: backgroundcolor,
         title: Text(
           title,
           style: GoogleFonts.inter(
@@ -122,7 +122,8 @@ class _ModelScreenState extends State<ModelScreen> {
                                 Row(
                                   children: [
                                     Card(
-                                      color: backgroundcolor,
+                                      elevation: 5,
+                                      color: color.withOpacity(0.5),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5)
                                       ),
@@ -149,7 +150,8 @@ class _ModelScreenState extends State<ModelScreen> {
                                       ),
                                     ),
                                     Card(
-                                      color: color,
+                                      elevation: 0,
+                                      color: color.withOpacity(0.5),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5)
                                       ),
@@ -180,7 +182,7 @@ class _ModelScreenState extends State<ModelScreen> {
                           height: MediaQuery.of(context).size.height * 0.16,
                           width: MediaQuery.of(context).size.width * 0.1,
                           decoration: BoxDecoration(
-                            color: backgroundcolor,
+                            color: backgroundcolor.withOpacity(0.5),
                             borderRadius: const BorderRadius.only(
                               topRight: Radius.circular(10),
                               bottomRight: Radius.circular(10),

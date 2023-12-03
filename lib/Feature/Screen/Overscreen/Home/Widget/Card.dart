@@ -9,7 +9,7 @@ class CustomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical:30.0,horizontal: 15.0),
+      padding: const EdgeInsets.only(top:30.0,left: 15.0,right: 15,bottom: 10),
       child: GestureDetector(
         onTap: ()async {
           final Uri uri = Uri(
@@ -25,7 +25,7 @@ class CustomCard extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: themeColor.card,
+            color: themeColor.appblue,
           ),
           child: Row(
             children: [
@@ -33,7 +33,7 @@ class CustomCard extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.2,
                 width: MediaQuery.of(context).size.width * 0.35,
                 decoration: const BoxDecoration(
-                  image: DecorationImage(image: AssetImage('asset/card.png'))
+                  image: DecorationImage(image: AssetImage('asset/card2.png'))
                 ),
               ),
               Expanded(
@@ -48,14 +48,16 @@ class CustomCard extends StatelessWidget {
                             'Helpline - 24/7',
                             style: GoogleFonts.inter(
                               fontSize: 18,
-                              fontWeight: FontWeight.w500
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white
                             ),
                           ),
                           Text(
                             'Choose 8 Language',
                             style: GoogleFonts.inter(
                               fontSize: 14,
-                              fontWeight: FontWeight.w200
+                              fontWeight: FontWeight.w200,
+                              color: Colors.white
                             ),
                           ),
                         ],
@@ -67,7 +69,7 @@ class CustomCard extends StatelessWidget {
                         '1800 103 7100',
                         style: GoogleFonts.inter(
                           fontSize: 20,
-                          color: themeColor.green,
+                          color: Colors.white,
                           fontWeight: FontWeight.w500
                         ),
                       ),
