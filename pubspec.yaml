@@ -93,6 +93,7 @@ flutter:
   assets:
     - json/
     - asset/
+    - asset/support/
     - asset/cat/
     - asset/category/
     - asset/lottie/

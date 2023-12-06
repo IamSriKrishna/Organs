@@ -20,7 +20,7 @@ class ProgramandCourse extends StatelessWidget {
               tabs: [
                 Tab(
                   child: Text(
-                    'Programs',
+                    'Support',
                     style: GoogleFonts.inter(
                       color: themeColor.black,
                       fontSize: 16.5,
@@ -30,7 +30,7 @@ class ProgramandCourse extends StatelessWidget {
                 ),
                 Tab(
                   child: Text(
-                    'Course',
+                    'Courses',
                     style: GoogleFonts.inter(
                       color: themeColor.black,
                       fontSize: 16.5,

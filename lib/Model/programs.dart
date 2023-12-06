@@ -1,11 +1,13 @@
 class Programs{
   final String title;
   final String url;
-  Programs({required this.title,required this.url});
+  final String img;
+  Programs({required this.title,required this.url,required this.img});
 }
 
 class Course{
   final String title;
   final String urlId;
-  Course({required this.title,required this.urlId});
+  final String img;
+  Course({required this.title,required this.urlId,required this.img});
 }

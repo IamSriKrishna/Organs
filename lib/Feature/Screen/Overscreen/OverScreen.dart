@@ -24,19 +24,49 @@ class _OverScreenState extends State<OverScreen> {
       body: screens[_currentIndex],
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
-        height: MediaQuery.of(context).size.height * 0.060,
+        height: MediaQuery.of(context).size.height * 0.055,
         index: _currentIndex,
         items: [
-        Image.asset(
-          'asset/curve/home.png',
-          height: MediaQuery.of(context).size.height * 0.0325,
+        _currentIndex==0?
+        Icon(
+          Icons.home_outlined,
           color: Color.fromRGBO(6, 43, 119, 1).withOpacity(0.7),
+        ):
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.home_outlined,
+              color: Color.fromRGBO(6, 43, 119, 1).withOpacity(0.7),
+            ),
+            Text('Home')
+          ],
         ),
-        Image.asset(
-          'asset/curve/program.png',
-          height: MediaQuery.of(context).size.height * 0.0325,
+        _currentIndex==1?
+        Icon(
+          Icons.contact_support,
           color: Color.fromRGBO(6, 43, 119, 1).withOpacity(0.7),
+        ):
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.contact_support,
+              color: Color.fromRGBO(6, 43, 119, 1).withOpacity(0.7),
+            ),
+            Text('Support')
+          ],
         ),
+        // Image.asset(
+        //   'asset/curve/home.png',
+        //   height: MediaQuery.of(context).size.height * 0.0325,
+        //   color: Color.fromRGBO(6, 43, 119, 1).withOpacity(0.7),
+        // ),
+        // Image.asset(
+        //   'asset/curve/program.png',
+        //   height: MediaQuery.of(context).size.height * 0.0325,
+        //   color: Color.fromRGBO(6, 43, 119, 1).withOpacity(0.7),
+        // ),
         // Image.asset(
         //   'asset/curve/calendar.png',
         //   height: MediaQuery.of(context).size.height * 0.0325,

@@ -69,7 +69,7 @@ class CustomCard extends StatelessWidget {
                         '1800 103 7100',
                         style: GoogleFonts.inter(
                           fontSize: 20,
-                          color: Colors.white,
+                          color: const Color.fromARGB(255, 255, 17, 0),
                           fontWeight: FontWeight.w500
                         ),
                       ),
