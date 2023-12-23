@@ -25,7 +25,7 @@ class CustomCard extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: themeColor.appblue,
+            color: Colors.red,
           ),
           child: Row(
             children: [
@@ -69,7 +69,7 @@ class CustomCard extends StatelessWidget {
                         '1800 103 7100',
                         style: GoogleFonts.inter(
                           fontSize: 20,
-                          color: const Color.fromARGB(255, 255, 17, 0),
+                          color: Colors.white,
                           fontWeight: FontWeight.w500
                         ),
                       ),

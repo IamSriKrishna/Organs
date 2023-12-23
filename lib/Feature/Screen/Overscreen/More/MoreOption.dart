@@ -81,7 +81,7 @@ class MoreOption extends StatelessWidget {
                 },
               ),
               CustomExpandWidget(
-                title: 'Feedback',
+                title: 'FAQ',
                 icon: image.feedback,
                 onTap: () {
                   _launchUrl('play.google.com');
