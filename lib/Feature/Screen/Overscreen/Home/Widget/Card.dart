@@ -25,7 +25,7 @@ class CustomCard extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.red,
+            color: themeColor.red,
           ),
           child: Row(
             children: [
@@ -53,10 +53,9 @@ class CustomCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'Choose 8 Language',
+                            'In 8 Languages',
                             style: GoogleFonts.inter(
                               fontSize: 14,
-                              fontWeight: FontWeight.w200,
                               color: Colors.white
                             ),
                           ),

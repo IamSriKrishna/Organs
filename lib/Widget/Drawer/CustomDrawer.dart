@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:mohan/Util/util.dart';
 import 'package:mohan/Widget/Drawer/CustomExpandWidget.dart';
-import 'package:mohan/Widget/Extra/WebScreen.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
 
-  
-  shareApp() async {
-    await Share.share("Mohan Foundation", subject: "Organ Donation");
+Future<void> _launchUrl(String url) async {
+  final Uri uri = Uri.parse('https://play.google.com/store/apps/details?id=mohanfoundation.helplineapp');
+  if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+    throw 'Cannot launch';
   }
-
-  Future<void> _launchUrl(String url) async {
-    final Uri uri = Uri(scheme: 'https', host: url, path: 'store');
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      throw 'can not launch';
-    }
-  }
+}
   Future<void> uTube(String url) async {
     final Uri uri = Uri(scheme: 'https', host: url, path: 'mohanfoundation' ,query: 'si=plTMRk3cScFCmgSO');
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
@@ -53,18 +47,40 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Image.asset('asset/mohan.png'),
+        Padding(
+          padding: const EdgeInsets.only(top:50.0),
+          child: Container(
+            child: Image.asset('asset/mohan.png'),
+            color: Colors.white,
+          ),
+        ),
+        SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Organ Donation',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         Container(
           decoration: const BoxDecoration(
-            color: Colors.white38,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(15),
-              topRight: Radius.circular(15),
-            )
+            color: Colors.white,
           ),
-          height: MediaQuery.of(context).size.height * 0.8,
+          height: MediaQuery.of(context).size.height * 0.7,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -72,30 +88,28 @@ class CustomDrawer extends StatelessWidget {
                 title: 'Contact Us',
                 icon: image.phone,
                 onTap: ()async {
-                  final Uri uri = Uri(
-                    scheme: 'tel',
-                    path: '1800 103 7100',
-                  );
-                  if(await canLaunchUrl(uri)){
-                    await launchUrl(uri);
-                  }
+                  await launchUrl(Uri.parse("https://www.mohanfoundation.org/contact.asp"));
                 },
               ),
               CustomExpandWidget(
                 title: 'About Us',
                 icon: image.aboutUs,
-                onTap: () {
-                  Navigator.push(
-                    context, 
-                    MaterialPageRoute(builder:(context) => const WebviewScreen(title: 'Our Website'),)
-                  );
+                onTap: () async{
+                  await launchUrl(Uri.parse("https://www.mohanfoundation.org/who.asp"));
+                },
+              ),
+              CustomExpandWidget(
+                title: 'FAQ',
+                icon: image.faq,
+                onTap: () async{
+                  await launchUrl(Uri.parse("https://www.mohanfoundation.org/faqs.asp"));
                 },
               ),
               CustomExpandWidget(
                 title: 'Feedback',
                 icon: image.feedback,
-                onTap: () {
-                  _launchUrl('play.google.com');
+                onTap: () async{
+                  await launchUrl(Uri.parse("https://www.mohanfoundation.org/feedback.asp"));
                 },
               ),
               CustomExpandWidget(
@@ -109,17 +123,14 @@ class CustomDrawer extends StatelessWidget {
                 title: 'Share',
                 icon: image.share,
                 onTap: () {
-                  shareApp();
+                  Share.shareUri(Uri.parse("https://play.google.com/store/apps/details?id=mohanfoundation.helplineapp"));
                 },
               ),
               CustomExpandWidget(
                 title: 'Our Website',
                 icon: image.ourWebsite,
-                onTap: () {
-                  Navigator.push(
-                    context, 
-                    MaterialPageRoute(builder:(context) => const WebviewScreen(title: 'Our Website'),)
-                  );
+                onTap: ()async {
+                  await launchUrl(Uri.parse("https://www.mohanfoundation.org"));
                 },
               ),
               Expanded(
@@ -134,7 +145,7 @@ class CustomDrawer extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white
+                            color: Colors.black38
                           ),
                         ),
                         Row(
@@ -146,7 +157,7 @@ class CustomDrawer extends StatelessWidget {
                               },
                               child: Image.asset(
                                 image.x,
-                                height: MediaQuery.of(context).size.height * 0.06,
+                                height: MediaQuery.of(context).size.height * 0.04,
                               ),
                             ),
                             InkWell(
@@ -155,7 +166,7 @@ class CustomDrawer extends StatelessWidget {
                               },
                               child: Image.asset(
                                 image.uTube,
-                                height: MediaQuery.of(context).size.height * 0.06,
+                                height: MediaQuery.of(context).size.height * 0.04,
                               ),
                             ),
                             InkWell(
@@ -164,7 +175,7 @@ class CustomDrawer extends StatelessWidget {
                               },
                               child: Image.asset(
                                 image.linkedIn,
-                                height: MediaQuery.of(context).size.height * 0.06,
+                                height: MediaQuery.of(context).size.height * 0.04,
                               ),
                             ),
                             InkWell(
@@ -173,16 +184,16 @@ class CustomDrawer extends StatelessWidget {
                               },
                               child: Image.asset(
                                 image.meta,
-                                height: MediaQuery.of(context).size.height * 0.06,
+                                height: MediaQuery.of(context).size.height * 0.04,
                               ),
                             ),
                             InkWell(
-                              onTap: () {
-                                insta('www.instagram.com');
+                              onTap: () async{
+                                await launchUrl(Uri.parse("https://www.instagram.com/mohanfound/?igsh=MTZnZHI1aGtzeGIyag%3D%3D"));
                               },
                               child: Image.asset(
                                 image.insta,
-                                height: MediaQuery.of(context).size.height * 0.06,
+                                height: MediaQuery.of(context).size.height * 0.04,
                               ),
                             ),
                           ],

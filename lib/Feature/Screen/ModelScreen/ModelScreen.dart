@@ -3,17 +3,21 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mohan/Model/jsonModel.dart';
+import 'package:mohan/Feature/Screen/ModelScreen/ModalExpand.dart';
+import 'package:mohan/Util/util.dart';
+import 'package:mohan/Widget/Extra/SearchShimmer.dart';
+import 'package:http/http.dart' as http;
 import 'package:share_plus/share_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 class ModelScreen extends StatefulWidget {
+  final String title;
+  final String json;
   static const route = '/ModelScreen';
   const ModelScreen({
     super.key,
-    
+    required this.title,
+    required this.json,
   });
 
   @override
@@ -21,78 +25,195 @@ class ModelScreen extends StatefulWidget {
 }
 
 class _ModelScreenState extends State<ModelScreen> {
-  late final String jsondata;
+  TextEditingController search = TextEditingController();
+  bool isLoading = true;
+  bool isError = false;
+  List<dynamic> articles = [];
+  List<dynamic> filteredArticles =[];
+ Future<void> fetchNews() async {
+  String apiUrl =
+      'https://www.medindia.net/apps/jsondata/mf/emergency.asp?cat=${widget.json}&source=Android';
+  
+  try {
+    final response = await http.get(Uri.parse(apiUrl));
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final modal = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final json = modal['json'];
-    jsondata = json;
-  }
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
 
-  Future<List<JsonModel>?> readJsonData() async {
-    try {
-      final jsonData = await rootBundle.loadString(jsondata);
-      final list = json.decode(jsonData) as List<dynamic>;
-      return list.map((e) => JsonModel.fromJson(e)).toList();
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error loading JSON data: $e")));
-      return null;
+      if (mounted) {
+        setState(() {
+          articles = jsonData['EmergencyDetails'];
+          filteredArticles = articles.toList(); // Ensure a new instance for filteredArticles
+          isLoading = false;
+        });
+        setState(() {});
+      }
+    } else {
+      print('Error: Failed To fetch data');
+      if (mounted) {
+        setState(() {
+          isError = true;
+        });
+      }
+    }
+  } catch (e) {
+    print('Error: $e');
+    if (mounted) {
+      setState(() {
+        isError = true;
+      });
     }
   }
-
-  
-  shareApp(String title,String location) async {
-    await Share.share(title, subject: location);
+}
+  shareApp(String query) async {
+    await Share.shareUri(
+      Uri.parse(
+        'https://www.google.com/maps/search/?api=1&query=$query'
+      )
+    );
   }
   @override
+  void initState() {
+    super.initState();
+    fetchNews();
+  }
+    void filterArticles(String searchText) {
+    setState(() {
+      filteredArticles = articles
+          .where((article) =>
+              article['state'].toString().toLowerCase().contains(searchText.toLowerCase()))
+          .toList();
+    });
+  }
+      void filtercity(String searchText) {
+    setState(() {
+      filteredArticles = articles
+          .where((article) =>
+              article['city'].toString().toLowerCase().contains(searchText.toLowerCase()))
+          .toList();
+    });
+  }
+  static const List<String> searchPlace = [
+    "andhra pradesh",
+    "arunachal pradesh",
+    "assam",
+    "bihar",
+    "chhattisgarh",
+    "goa",
+    "gujarat",
+    "haryana",
+    "himachal pradesh",
+    "jharkhand",
+    "karnataka",
+    "kerala",
+    "madhya pradesh",
+    "maharashtra",
+    "manipur",
+    "meghalaya",
+    "mizoram",
+    "nagaland",
+    "odisha",
+    "punjab",
+    "rajasthan",
+    "sikkim",
+    "tamil nadu",
+    "telangana",
+    "tripura",
+    "uttar pradesh",
+    "uttarakhand",
+    "west bengal"
+];
+
+  @override
   Widget build(BuildContext context) {
-    final modal = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>; // Specify the type of the map value.
-    final color = modal['color'] as Color; 
-    final backgroundcolor = modal['back'] as Color; 
-    final title = modal['title']; 
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        scrolledUnderElevation: 15,
-        backgroundColor: backgroundcolor,
-        title: Text(
-          title,
-          style: GoogleFonts.inter(
-            fontSize: 18,
-            fontWeight: FontWeight.w500
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: Text(widget.title),
+            floating: true,
+            foregroundColor: Colors.white,
+            backgroundColor: themeColor.appblue,
+            bottom: PreferredSize(
+              preferredSize: Size(
+                double.infinity, 
+                MediaQuery.of(context).size.height * 0.08
+              ), 
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10
+                    ),
+                    child: Autocomplete<String>(
+                      optionsMaxHeight: MediaQuery.of(context).size.height * 0.4,
+                      onSelected: (String value) {
+                        filterArticles(value);
+                      },
+                      optionsBuilder: (TextEditingValue textEditingValue) {
+                        if(textEditingValue == ''){
+                          return const Iterable<String>.empty();
+                        }
+                        return searchPlace.where((String place){
+                          return place.contains(textEditingValue.text.toString().toLowerCase());
+                        });
+                      },
+                      fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode, VoidCallback onFieldSubmitted) {
+                        return TextField(
+                          controller: textEditingController,
+                          focusNode: focusNode,
+                          decoration: InputDecoration(
+                            hintText: 'Search City or State',
+                          ),
+                          onChanged: (String value) {
+                            filtercity(value);
+                          },
+                        );
+                      },
+                    ),
+                  )
+                ),
+              )
+            ),
           ),
-        ),
-        leading: InkWell(
-          onTap: (){
-            Navigator.pop(context);
-          }, 
-          child: const Icon(Icons.arrow_back_ios_new)
-        ),
-      ),
-      body: FutureBuilder(
-        future: readJsonData(), 
-        builder:(context, data) {
-          if(data.hasError){
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          else if(data.hasData){
-            var items = data.data as List<JsonModel>;
-            return ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: items.length,
-              itemBuilder:(context, index) {
-                return Card(
+          isError?SliverToBoxAdapter(
+            child: Column(
+              children: [
+                Text("Time Out Due To lack Of Internet"),
+                Image.asset('asset/flatIcon/not-found.gif'),
+              ],
+            ),
+          ):
+          isLoading? SearchShimmer():
+          SliverList.builder(
+            itemCount: filteredArticles.length,
+            itemBuilder:(context, index) {
+              // String originalString = filteredArticles[index]['phone'].toString();
+              // int indexOfSlash = originalString.indexOf('/');
+              return  InkWell(
+                onTap: () {
+                  Get.to(()=>
+                    ModalExpand(
+                      hospital_Name: filteredArticles[index]['hospital_name'],
+                      address: filteredArticles[index]['address'],
+                      city: filteredArticles[index]['city'],
+                      state: filteredArticles[index]['state'],
+                      phone: filteredArticles[index]['phone'],
+                      email: filteredArticles[index]['email'],
+                      website: filteredArticles[index]['website'],
+                    )
+                  );
+                },
+                child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15)
                   ),
                   margin: const EdgeInsets.symmetric(vertical: 10,horizontal: 5),
                   elevation: 5,
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.16,
+                    height: MediaQuery.of(context).size.height * 0.175,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -106,83 +227,126 @@ class _ModelScreenState extends State<ModelScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  '${items[index].hospitalName}',
-                                  maxLines: 2,
+                                  '${filteredArticles[index]['hospital_name']}',
+                                  maxLines: 1,
                                   style:  GoogleFonts.inter(
                                     fontSize: 18,
                                   ),
                                 ),
                                 Text(
-                                  '${items[index].hospitalAddress}',
+                                  '${filteredArticles[index]['address']}',
                                   overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
                                   style:  GoogleFonts.inter(
                                     color: Colors.grey
                                   ),
                                 ),
-                                Row(
-                                  children: [
-                                    Card(
-                                      elevation: 5,
-                                      color: color.withOpacity(0.5),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5)
+                                Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5)
+                                  ),
+                                  color: themeColor.red,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 5
+                                    ),
+                                    child: Text(
+                                      '${filteredArticles[index]['city']}',
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      style:  GoogleFonts.inter(
+                                        color: Colors.white
                                       ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: InkWell(
-                                          onTap: ()async {
-                                            final Uri uri = Uri(
-                                              scheme: 'tel',
-                                              path: '${items[index].number}',
-                                            );
-                                            if(await canLaunchUrl(uri)){
-                                              await launchUrl(uri);
-                                            }
-                                          },
-                                          child: Text(
-                                            '${items[index].number}',
-                                            overflow: TextOverflow.ellipsis,
-                                            style:  GoogleFonts.inter(
-                                              color: Colors.white
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      // SizedBox(
+                                      //   width: MediaQuery.of(context).size.width * 0.35,
+                                      //   child: Card(
+                                      //     elevation: 5,
+                                      //     color: themeColor.appblue,
+                                      //     shape: RoundedRectangleBorder(
+                                      //       borderRadius: BorderRadius.circular(5)
+                                      //     ),
+                                      //     child: Padding(
+                                      //       padding: const EdgeInsets.all(8.0),
+                                      //       child: InkWell(
+                                      //         onTap: ()async {
+                                      //           final Uri uri = Uri(
+                                      //             scheme: 'tel',
+                                      //             path: '${originalString==""?"00000":
+                                      //               indexOfSlash != -1
+                                      //               ? originalString.substring(0, indexOfSlash) 
+                                      //               : originalString}',
+                                      //           );
+                                      //           if(await canLaunchUrl(uri)){
+                                      //             await launchUrl(uri);
+                                      //           }
+                                      //         },
+                                      //         child: Text(
+                                      //           '${originalString==""?"Not Provided":
+                                      //               indexOfSlash != -1
+                                      //               ? originalString.substring(0, indexOfSlash) 
+                                      //               : originalString
+                                      //             }',
+                                      //           overflow: TextOverflow.ellipsis,
+                                      //           style:  GoogleFonts.inter(
+                                      //             color: Colors.white
+                                      //           ),
+                                      //         ),
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      InkWell(
+                                        onTap:()=> shareApp(filteredArticles[index]['address']),
+                                        child: Card(
+                                          elevation: 5,
+                                          color: themeColor.appblue,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(5)
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal:8.0,
+                                              vertical: 5
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Icon(Icons.share,color: Colors.white,),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
+                                                  "Share",
+                                                  style: TextStyle(
+                                                    color: Colors.white
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                    Card(
-                                      elevation: 0,
-                                      color: color.withOpacity(0.5),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5)
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: InkWell(
-                                          onTap: ()async {
-                                            shareApp('${items[index].hospitalName}','${items[index].hospitalAddress}');
-                                            
-                                          },
-                                          child: Text(
-                                            'Share 🔗',
-                                            overflow: TextOverflow.ellipsis,
-                                            style:  GoogleFonts.inter(
-                                              color: Colors.white
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                         ),
                         Container(
-                          height: MediaQuery.of(context).size.height * 0.16,
+                          height: double.infinity,
                           width: MediaQuery.of(context).size.width * 0.1,
                           decoration: BoxDecoration(
-                            color: backgroundcolor.withOpacity(0.5),
+                            color: themeColor.appblue,
                             borderRadius: const BorderRadius.only(
                               topRight: Radius.circular(10),
                               bottomRight: Radius.circular(10),
@@ -193,16 +357,11 @@ class _ModelScreenState extends State<ModelScreen> {
                       ],
                     ),
                   ),
-                );
-              },
-            );
-          }
-          else{
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        } ,
+                ),
+              );
+            },
+          )
+        ],
       ),
     );
   }

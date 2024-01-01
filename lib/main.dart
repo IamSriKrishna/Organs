@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mohan/SplashScreen.dart';
 import 'package:mohan/Util/localNotification.dart';
-import 'package:mohan/Widget/Drawer/CustomHiddenDrawer.dart';
 import 'package:mohan/route.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,12 +21,10 @@ class _MyAppState extends State<MyApp> {
   @override
   @override
   Widget build(BuildContext context){
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HiddenDrawer(),
+      home: SplashScreen(),
       onGenerateRoute: (settings) => onGenerator(settings),
     );
   }
-
-
 }

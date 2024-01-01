@@ -21,7 +21,7 @@ class CustomExpandWidget extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10)
           ),
-          elevation: 5,
+          elevation: 2,
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -44,10 +44,10 @@ class CustomExpandWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(right:10.0),
-                  child: Icon(Icons.arrow_forward_ios),
-                )
+                // const Padding(
+                //   padding: EdgeInsets.only(right:10.0),
+                //   child: Icon(Icons.arrow_forward_ios),
+                // )
               ],
             ),
           ),

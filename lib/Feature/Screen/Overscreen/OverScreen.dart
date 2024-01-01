@@ -4,6 +4,7 @@ import 'package:mohan/Util/Screens.dart';
 import 'package:mohan/Util/util.dart';
 import 'package:mohan/Widget/Drawer/CustomDrawer.dart';
 class OverScreen extends StatefulWidget {
+  static const route = '/OverScreen';
   const OverScreen({super.key});
 
   @override
@@ -16,62 +17,69 @@ class _OverScreenState extends State<OverScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('MOHAN Foundation'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Image.asset('asset/logo.png'),
+          )
+        ],
+      ),
       drawer: Drawer(
-        backgroundColor: themeColor.black,
+        backgroundColor: themeColor.appblue,
         child: const CustomDrawer(),
       ),
       //appBar: customAppbar(context),
       body: screens[_currentIndex],
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
-        height: MediaQuery.of(context).size.height * 0.055,
+        height: MediaQuery.of(context).size.height * 0.065,
         index: _currentIndex,
         items: [
         _currentIndex==0?
-        Icon(
-          Icons.home_outlined,
-          color: Color.fromRGBO(6, 43, 119, 1).withOpacity(0.7),
+        Image.asset(
+          "asset/curve/home1.png",
+          height: MediaQuery.of(context).size.height * 0.045,
         ):
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.home_outlined,
-              color: Color.fromRGBO(6, 43, 119, 1).withOpacity(0.7),
-            ),
-            Text('Home')
+            Image.asset(
+          "asset/curve/home1.png",
+          height: MediaQuery.of(context).size.height * 0.045,
+        ),
+            Text(
+              'Home',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: themeColor.appblue
+              ),
+            )
           ],
         ),
         _currentIndex==1?
-        Icon(
-          Icons.contact_support,
-          color: Color.fromRGBO(6, 43, 119, 1).withOpacity(0.7),
+        Image.asset(
+          "asset/curve/graduation.png",
+          height: MediaQuery.of(context).size.height * 0.045,
         ):
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.contact_support,
-              color: Color.fromRGBO(6, 43, 119, 1).withOpacity(0.7),
+            Image.asset(
+              "asset/curve/graduation.png",
+              height: MediaQuery.of(context).size.height * 0.045,
             ),
-            Text('Support')
+            Text(
+              'Support',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: themeColor.appblue
+              ),
+            
+              )
           ],
         ),
-        // Image.asset(
-        //   'asset/curve/home.png',
-        //   height: MediaQuery.of(context).size.height * 0.0325,
-        //   color: Color.fromRGBO(6, 43, 119, 1).withOpacity(0.7),
-        // ),
-        // Image.asset(
-        //   'asset/curve/program.png',
-        //   height: MediaQuery.of(context).size.height * 0.0325,
-        //   color: Color.fromRGBO(6, 43, 119, 1).withOpacity(0.7),
-        // ),
-        // Image.asset(
-        //   'asset/curve/calendar.png',
-        //   height: MediaQuery.of(context).size.height * 0.0325,
-        //   color: Color.fromRGBO(6, 43, 119, 1).withOpacity(0.7),
-        // )
         ],
         onTap: (value) {
           setState(() {

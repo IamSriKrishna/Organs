@@ -23,24 +23,24 @@ List<Categories> category = const[
   Categories(
     title: 'Eye Banks', 
     color: Color.fromRGBO(30, 187, 164, 1), 
-    icon: 'asset/category/eye.png',
+    icon: 'asset/category/eye (1).png',
     background: Color.fromRGBO(108, 213, 197, 1),
-    json: 'json/eyeJson.json'
+    json: 'Eye+Bank'
   ),
   
   Categories(
     title: 'Skin Banks', 
     color: Color.fromRGBO(230, 106, 63, 1), 
-    icon: 'asset/category/skin.png',
+    icon: 'asset/category/depilation.png',
     background: Color.fromRGBO(253, 168, 139, 1),
-    json: 'json/skinjson.json'
+    json: 'Skin+Bank'
   ),
   Categories(
     title: 'Body Donations', 
     color: Color.fromRGBO(233, 79, 199, 1), 
     icon: 'asset/category/human-body.png',
     background: Color.fromRGBO(247, 159, 214, 1),
-    json: 'json/bodyjson.json'
+    json: 'Body+Donation'
   ),
   
   Categories(
@@ -48,14 +48,14 @@ List<Categories> category = const[
     color: Color.fromRGBO(61, 128, 233, 1), 
     icon: 'asset/category/hospital.png',
     background: Color.fromRGBO(155, 190, 244, 1),
-    json: 'json/organjson.json'
+    json: 'Govt+Bodies'
   ),
   Categories(
     title: 'Non-Governmental\nOrganization', 
     color: Color.fromRGBO(41, 168, 194, 1), 
     icon: 'asset/category/ngo.png',
     background: Color.fromRGBO(142, 199, 211, 1),
-    json: 'json/ngojson.json'
+    json: 'NGOs+List'
   ),
   
   Categories(
@@ -63,12 +63,12 @@ List<Categories> category = const[
     color: Color.fromRGBO(125, 74, 228, 1), 
     icon: 'asset/category/government.png',
     background: Color.fromRGBO(188, 161, 242, 1),
-    json: 'json/gojson.json'
+    json: 'transplant'
   ),
   Categories(
     title: 'Laws On\nTransplantation', 
     color: Color.fromRGBO(125, 74, 228, 1), 
-    icon: 'asset/category/balance.png',
+    icon: 'asset/category/compliant.png',
     background: Color.fromRGBO(188, 161, 242, 1),
     json: 'json/gojson.json'
   ),
@@ -113,7 +113,8 @@ class CategoriesCard extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Image.asset(icon,fit: BoxFit.fill,color: color,),
+                child: Image.asset(
+                  icon,fit: BoxFit.fill,color: color,),
               ),
             ),
           ),
