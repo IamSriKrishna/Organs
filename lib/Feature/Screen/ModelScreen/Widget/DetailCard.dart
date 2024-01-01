@@ -7,13 +7,15 @@ class DetailCard extends StatelessWidget {
   final String hospital_Name;
   final String address;
   final String city;
+  final String pincode;
   final String state;
   const DetailCard({
     super.key,
     required this.hospital_Name,
     required this.address,
     required this.city,
-    required this.state
+    required this.state,
+    required this.pincode
   });
   Future<void> _launchMaps(String query) async {
     final String googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=$query';
@@ -69,7 +71,7 @@ class DetailCard extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                              vertical: 10
+                              vertical: 5
                             ),
                             child: Text(
                               "$address",
@@ -83,7 +85,7 @@ class DetailCard extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
-                              bottom: 10
+                              bottom: 5
                             ),
                             child: Text(
                               "$city",
@@ -97,7 +99,7 @@ class DetailCard extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
-                              bottom: 10
+                              bottom: 5
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,6 +118,15 @@ class DetailCard extends StatelessWidget {
                                   color: themeColor.appblue,
                                 )
                               ],
+                            ),
+                          ),
+                          Text(
+                            "$pincode",
+                            maxLines: 2,
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold
                             ),
                           ),
                         ],

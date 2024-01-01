@@ -203,6 +203,7 @@ class _ModelScreenState extends State<ModelScreen> {
                       phone: filteredArticles[index]['phone'],
                       email: filteredArticles[index]['email'],
                       website: filteredArticles[index]['website'],
+                      pincode: filteredArticles[index]['pincode'],
                     )
                   );
                 },
@@ -219,7 +220,7 @@ class _ModelScreenState extends State<ModelScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.75,
+                          width: MediaQuery.of(context).size.width * 0.85,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
@@ -264,46 +265,9 @@ class _ModelScreenState extends State<ModelScreen> {
                                 Padding(
                                   padding: const EdgeInsets.only(top: 0),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      // SizedBox(
-                                      //   width: MediaQuery.of(context).size.width * 0.35,
-                                      //   child: Card(
-                                      //     elevation: 5,
-                                      //     color: themeColor.appblue,
-                                      //     shape: RoundedRectangleBorder(
-                                      //       borderRadius: BorderRadius.circular(5)
-                                      //     ),
-                                      //     child: Padding(
-                                      //       padding: const EdgeInsets.all(8.0),
-                                      //       child: InkWell(
-                                      //         onTap: ()async {
-                                      //           final Uri uri = Uri(
-                                      //             scheme: 'tel',
-                                      //             path: '${originalString==""?"00000":
-                                      //               indexOfSlash != -1
-                                      //               ? originalString.substring(0, indexOfSlash) 
-                                      //               : originalString}',
-                                      //           );
-                                      //           if(await canLaunchUrl(uri)){
-                                      //             await launchUrl(uri);
-                                      //           }
-                                      //         },
-                                      //         child: Text(
-                                      //           '${originalString==""?"Not Provided":
-                                      //               indexOfSlash != -1
-                                      //               ? originalString.substring(0, indexOfSlash) 
-                                      //               : originalString
-                                      //             }',
-                                      //           overflow: TextOverflow.ellipsis,
-                                      //           style:  GoogleFonts.inter(
-                                      //             color: Colors.white
-                                      //           ),
-                                      //         ),
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
+                                      SizedBox(),
                                       InkWell(
                                         onTap:()=> shareApp(filteredArticles[index]['address']),
                                         child: Card(

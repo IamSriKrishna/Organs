@@ -15,6 +15,7 @@ class ModalExpand extends StatefulWidget {
   final String phone;
   final String email;
   final String website;
+  final String pincode;
   const ModalExpand({
     super.key,
     required this.hospital_Name,
@@ -23,7 +24,8 @@ class ModalExpand extends StatefulWidget {
     required this.state,
     required this.phone,
     required this.email,
-    required this.website
+    required this.website,
+    required this.pincode
   });
 
   @override
@@ -59,7 +61,8 @@ class _ModalExpandState extends State<ModalExpand> {
           DetailCard(
             hospital_Name: widget.hospital_Name, 
             address: widget.address, 
-            city: widget.city, state: widget.state
+            city: widget.city, state: widget.state,
+            pincode: widget.pincode,
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -180,7 +183,20 @@ class _ModalExpandState extends State<ModalExpand> {
                 )
               ),
               onPressed: (){
-                displayListInCupertinoModalPopup();
+                List<String> outputList = widget.phone
+                  .split(RegExp(r'[\/,\\]')) 
+                  .map((String item) => item.replaceAll(RegExp(r'[^\w\s-]'), '').trim())
+                  .where((String item) => item.isNotEmpty)
+                  .toList();
+                if(outputList.length==0){
+                }else if(outputList.length==1){
+                  launchUrl(Uri(
+                    scheme: 'tel',
+                    path: widget.phone,
+                  ));
+                }else{
+                  displayListInCupertinoModalPopup();
+                }
               }, 
               child: Row(
                 children: [
@@ -233,13 +249,13 @@ class _ModalExpandState extends State<ModalExpand> {
       return Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 20
+            horizontal: 50
           ),
           child: CupertinoActionSheet(
             title: Text(
               'Select Contact',
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 15,
                 fontWeight: FontWeight.bold
               ),
             ),
@@ -262,26 +278,6 @@ class _ModalExpandState extends State<ModalExpand> {
                     },
                   ),
               ],
-            cancelButton: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10
-              ),
-              child: CupertinoActionSheetAction(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  'Cancel',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold
-                  ),
-                    
-                ),
-                isDefaultAction: true,
-              ),
-            ),
           ),
         ),
       );

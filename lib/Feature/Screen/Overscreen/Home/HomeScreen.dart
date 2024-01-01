@@ -5,6 +5,7 @@ import 'package:mohan/Feature/Screen/ModelScreen/ModelScreen.dart';
 import 'package:mohan/Feature/Screen/Overscreen/Home/Widget/Card.dart';
 import 'package:mohan/Model/Categories.dart';
 import 'package:mohan/Util/util.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -42,10 +43,16 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                     onTap: () {
-                      Get.to(()=>ModelScreen(
+                      if(category[index].title==category[6].title){
+                        launchUrl(Uri.parse("https://www.mohanfoundation.org/tho/thobill1.asp"));
+                      }else if(category[index].title==category[7].title){
+                        launchUrl(Uri.parse("https://www.mohanfoundation.org/donorcard.asp"));
+                      }else{
+                        Get.to(()=>ModelScreen(
                         title: category[index].title,
                         json: category[index].json,
                       ));
+                      }
                     },
                     child: CategoriesCard(
                       icon: category[index].icon,
